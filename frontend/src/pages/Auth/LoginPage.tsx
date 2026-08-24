@@ -176,6 +176,32 @@ export default function LoginPage() {
               </Link>
             </p>
           </form>
+
+          {/* Quick Demo Credentials for Evaluators */}
+          <div className="mt-8 pt-6 border-t border-slate-100">
+            <p className="text-xs font-extrabold text-slate-400 uppercase tracking-wider text-center mb-4">Quick Demo Access</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button 
+                onClick={() => { setSelectedRole('PATIENT'); setForm({ email: 'john@caresync.app', password: 'Password123!' }); }}
+                className="px-3 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-lg text-xs font-bold text-slate-600 hover:text-blue-700 transition-colors text-center"
+              >
+                Patient
+              </button>
+              <button 
+                onClick={() => { setSelectedRole('DOCTOR'); setForm({ email: 'sarah@caresync.app', password: 'Password123!' }); }}
+                className="px-3 py-2 bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-200 rounded-lg text-xs font-bold text-slate-600 hover:text-emerald-700 transition-colors text-center"
+              >
+                Doctor
+              </button>
+              <button 
+                onClick={() => { setSelectedRole('ADMIN'); setForm({ email: 'admin@caresync.app', password: 'Password123!' }); }}
+                className="px-3 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-800 transition-colors text-center"
+              >
+                Admin
+              </button>
+            </div>
+            <p className="text-[10px] text-slate-400 text-center mt-3 font-medium">Click a role to auto-fill credentials. Password is Password123!</p>
+          </div>
         </div>
       </div>
     </div>
