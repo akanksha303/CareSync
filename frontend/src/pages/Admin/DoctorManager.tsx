@@ -61,7 +61,7 @@ export default function DoctorManager() {
 
   const generateSlotsMutation = useMutation({
     mutationFn: (data: { doctor_id: string; date: string }) => api.post('/api/admin/slots/generate', data),
-    onSuccess: (res) => {
+    onSuccess: (res: any) => {
       const count = (res.data as { generated: number }).generated;
       toast.success(`Generated ${count} slots!`);
     },
@@ -152,5 +152,7 @@ export default function DoctorManager() {
     </div>
   );
 }
+
+
 
 

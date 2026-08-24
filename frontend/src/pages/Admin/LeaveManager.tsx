@@ -33,7 +33,7 @@ export default function LeaveManager() {
 
   const createMutation = useMutation({
     mutationFn: () => api.post<{ affected_appointments: number }>('/api/admin/leave', form),
-    onSuccess: (res) => {
+    onSuccess: (res: any) => {
       const count = res.data.affected_appointments;
       toast.success(`Leave marked! ${count > 0 ? `${count} appointment(s) cancelled.` : ''}`);
       queryClient.invalidateQueries({ queryKey: ['admin-leaves'] });
@@ -105,5 +105,7 @@ export default function LeaveManager() {
     </div>
   );
 }
+
+
 
 

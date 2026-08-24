@@ -6,15 +6,15 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config: any) => {
   const token = localStorage.getItem('caresync_token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
 api.interceptors.response.use(
-  (res) => res,
-  (error) => {
+  (res: any) => res,
+  (error: any) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('caresync_token');
       localStorage.removeItem('caresync_user');
@@ -25,3 +25,4 @@ api.interceptors.response.use(
 );
 
 export default api;
+
