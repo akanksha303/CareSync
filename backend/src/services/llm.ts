@@ -1,6 +1,9 @@
 import OpenAI from 'openai';
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({ 
+  apiKey: process.env.GROQ_API_KEY || 'dummy_key_to_prevent_startup_crash',
+  baseURL: 'https://api.groq.com/openai/v1'
+});
 
 export interface PreVisitSummary {
   urgency_level: 'Low' | 'Medium' | 'High';
@@ -31,7 +34,7 @@ Symptoms: ${symptoms}`;
 
     const completion = await callWithTimeout(
       openai.chat.completions.create({
-        model: process.env.OPENAI_MODEL || 'gpt-4o',
+        model: process.env.GROQ_MODEL || 'llama3-8b-8192',
         messages: [{ role: 'user', content: prompt }],
         response_format: { type: 'json_object' },
         temperature: 0.3,
