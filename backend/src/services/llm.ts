@@ -70,7 +70,7 @@ Clinical notes: ${notes}`;
 
     const completion = await callWithTimeout(
       openai.chat.completions.create({
-        model: process.env.OPENAI_MODEL || 'gpt-4o',
+        model: process.env.GROQ_MODEL || 'llama3-8b-8192',
         messages: [{ role: 'user', content: prompt }],
         response_format: { type: 'json_object' },
         temperature: 0.3,
