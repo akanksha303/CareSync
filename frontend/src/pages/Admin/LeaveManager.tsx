@@ -23,12 +23,12 @@ export default function LeaveManager() {
 
   const { data: doctorsData } = useQuery({
     queryKey: ['admin-doctors'],
-    queryFn: () => api.get<{ doctors: DoctorUser[] }>('/api/admin/doctors').then(r => r.data),
+    queryFn: () => api.get<{ doctors: DoctorUser[] }>('/api/admin/doctors').then((r: any) => r.data),
   });
 
   const { data: leavesData, isLoading } = useQuery({
     queryKey: ['admin-leaves'],
-    queryFn: () => api.get<{ leaves: Leave[] }>('/api/admin/leaves').then(r => r.data),
+    queryFn: () => api.get<{ leaves: Leave[] }>('/api/admin/leaves').then((r: any) => r.data),
   });
 
   const createMutation = useMutation({
@@ -59,7 +59,7 @@ export default function LeaveManager() {
             <select className="input" value={form.doctor_id}
               onChange={e => setForm(f => ({ ...f, doctor_id: e.target.value }))}>
               <option value="">Select doctor...</option>
-              {doctorsData?.doctors?.map(d => (
+              {doctorsData?.doctors?.map((d: any) => (
                 <option key={d.id} value={d.id}>Dr. {d.name}</option>
               ))}
             </select>
@@ -91,7 +91,7 @@ export default function LeaveManager() {
           <p className="text-gray-500 text-sm">No leave records</p>
         )}
         <div className="space-y-2">
-          {leavesData?.leaves?.map(leave => (
+          {leavesData?.leaves?.map((leave: any) => (
             <div key={leave.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
               <div>
                 <p className="font-medium">Dr. {leave.doctor.name}</p>
@@ -105,3 +105,5 @@ export default function LeaveManager() {
     </div>
   );
 }
+
+

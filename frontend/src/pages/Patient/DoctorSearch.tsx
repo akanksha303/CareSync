@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
 
-const SearchIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>;
-const FilterIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>;
+const SearchIcon = ({ className }: { className?: string }) => <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>;
+const FilterIcon = ({ className }: { className?: string }) => <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>;
 
 interface Doctor {
   doctorId: string;
@@ -22,15 +22,15 @@ export default function DoctorSearch() {
     queryKey: ['doctors', specialisation],
     queryFn: () => api.get<{ doctors: Doctor[] }>('/api/patient/doctors', {
       params: specialisation ? { specialisation } : {},
-    }).then(r => r.data),
+    }).then((r: any) => r.data),
   });
 
-  const filtered = data?.doctors?.filter(d =>
+  const filtered = data?.doctors?.filter((d: any) =>
     d.name.toLowerCase().includes(search.toLowerCase()) ||
     d.specialisation.toLowerCase().includes(search.toLowerCase())
   ) || [];
 
-  const specialisations = [...new Set(data?.doctors?.map(d => d.specialisation) || [])];
+  const specialisations = [...new Set(data?.doctors?.map((d: any) => d.specialisation) || [])];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 max-w-6xl mx-auto font-sans pb-12">
@@ -70,7 +70,7 @@ export default function DoctorSearch() {
             onChange={e => setSpecialisation(e.target.value)}
           >
             <option value="">All Specialisations</option>
-            {specialisations.map(s => <option key={s} value={s}>{s}</option>)}
+            {specialisations.map((s: any) => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default function DoctorSearch() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map(doctor => (
+          {filtered.map((doctor: any) => (
             <div key={doctor.doctorId} className="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between">
               
               <div>
@@ -122,3 +122,6 @@ export default function DoctorSearch() {
     </div>
   );
 }
+
+
+

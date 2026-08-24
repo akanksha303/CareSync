@@ -6,9 +6,9 @@ import toast from 'react-hot-toast';
 import type { Appointment } from '../../types';
 import { format } from 'date-fns';
 
-const BrainIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>;
-const UserIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
-const PillIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>;
+const BrainIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>;
+const UserIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+const PillIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>;
 
 interface PrescriptionItem {
   medicine_name: string;
@@ -28,7 +28,7 @@ export default function AppointmentDetail() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['appointment', id],
-    queryFn: () => api.get<{ appointment: Appointment }>(`/api/doctor/appointments/${id}`).then(r => r.data),
+    queryFn: () => api.get<{ appointment: Appointment }>(`/api/doctor/appointments/${id}`).then((r: any) => r.data),
   });
 
   const completeMutation = useMutation({
@@ -131,7 +131,7 @@ export default function AppointmentDetail() {
                     <div>
                       <p className="text-xs font-bold text-slate-500 mb-2">SUGGESTED QUESTIONS</p>
                       <ul className="space-y-2">
-                        {appt.ai_pre_summary.suggested_questions.map((q, i) => (
+                        {appt.ai_pre_summary.suggested_questions.map((q: any, i: number) => (
                           <li key={i} className="flex gap-2 text-sm text-slate-700 font-medium">
                             <span className="text-brand-primary font-bold">•</span> {q}
                           </li>
@@ -176,7 +176,7 @@ export default function AppointmentDetail() {
                   </div>
                   
                   <div className="space-y-3">
-                    {prescription.map((med, i) => (
+                    {prescription.map((med: any, i: number) => (
                       <div key={i} className="flex flex-wrap gap-2 p-4 bg-slate-50 border border-slate-200 rounded-2xl relative">
                         <div className="w-full sm:w-auto flex-1"><input className="input py-2 text-sm" placeholder="Medicine Name" value={med.medicine_name} onChange={e => updateMed(i, 'medicine_name', e.target.value)} /></div>
                         <div className="w-full sm:w-auto flex-1"><input className="input py-2 text-sm" placeholder="Dosage (e.g. 500mg)" value={med.dosage} onChange={e => updateMed(i, 'dosage', e.target.value)} /></div>
@@ -230,7 +230,7 @@ export default function AppointmentDetail() {
                     <div className="mt-4">
                       <p className="text-xs font-bold text-slate-500 mb-2">RECOMMENDED FOLLOW-UP</p>
                       <ul className="space-y-2">
-                        {appt.ai_post_summary.follow_up_steps.map((step, i) => (
+                        {appt.ai_post_summary.follow_up_steps.map((step: any, i: number) => (
                           <li key={i} className="flex gap-2 text-sm text-slate-700 font-medium">
                             <span className="text-emerald-500 font-bold">→</span> {step}
                           </li>
@@ -247,3 +247,6 @@ export default function AppointmentDetail() {
     </div>
   );
 }
+
+
+

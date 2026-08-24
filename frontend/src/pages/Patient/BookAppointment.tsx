@@ -22,7 +22,7 @@ export default function BookAppointment() {
     queryKey: ['slots', doctorId, date],
     queryFn: () => api.get<{ slots: Slot[] }>(`/api/patient/doctors/${doctorId}/slots`, {
       params: { date },
-    }).then(r => r.data),
+    }).then((r: any) => r.data),
     enabled: !!doctorId,
   });
 
@@ -70,7 +70,7 @@ export default function BookAppointment() {
       <div>
         <h1 className="text-2xl font-bold">Book Appointment</h1>
         <div className="flex gap-2 mt-3">
-          {(['SELECT_SLOT', 'SYMPTOMS', 'CONFIRM'] as Step[]).map((s, i) => (
+          {(['SELECT_SLOT', 'SYMPTOMS', 'CONFIRM'] as Step[]).map((s: any, i: number) => (
             <div key={s} className={`flex items-center gap-2 text-sm ${
               step === s ? 'text-primary-600 font-semibold' : 'text-gray-400'
             }`}>
@@ -94,7 +94,7 @@ export default function BookAppointment() {
           </div>
           {slotsLoading && <div className="text-center py-4 text-gray-500">Loading slots...</div>}
           <div className="grid grid-cols-3 gap-2">
-            {slotsData?.slots?.map(slot => (
+            {slotsData?.slots?.map((slot: any) => (
               <button key={slot.id}
                 onClick={() => handleSelectSlot(slot)}
                 disabled={loading}
@@ -166,3 +166,5 @@ export default function BookAppointment() {
     </div>
   );
 }
+
+

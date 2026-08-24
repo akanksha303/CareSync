@@ -1,20 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import api from '../../api/client';
 import { format, isToday, isTomorrow, formatDistanceToNowStrict } from 'date-fns';
 import type { Appointment } from '../../types';
 
 // --- Icons ---
-const StethoscopeIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>;
-const CalendarIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>;
-const CalendarPlusIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><line x1="10" x2="14" y1="14" y2="14"/><line x1="12" x2="12" y1="12" y2="16"/></svg>;
-const SparklesIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
-const PillIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>;
-const ActivityIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>;
-const ArrowRightIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
-const ClockIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
-const AlertCircleIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>;
+const StethoscopeIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>;
+const CalendarIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>;
+const CalendarPlusIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><line x1="10" x2="14" y1="14" y2="14"/><line x1="12" x2="12" y1="12" y2="16"/></svg>;
+const SparklesIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
+const PillIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>;
+const ActivityIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>;
+const ArrowRightIcon = ({ className }: { className?: string }) => <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
+const ClockIcon = ({ className }: { className?: string }) => <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+const AlertCircleIcon = ({ className }: { className?: string }) => <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>;
 
 // --- Skeletons ---
 const DashboardSkeleton = () => (
@@ -42,18 +42,17 @@ const DashboardSkeleton = () => (
 // --- Component ---
 export default function PatientDashboard() {
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   // Fetch Appointments
   const { data: apptData, isLoading: apptsLoading, isError: apptsError } = useQuery({
     queryKey: ['patient-appointments'],
-    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/patient/appointments').then(r => r.data),
+    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/patient/appointments').then((r: any) => r.data),
   });
 
   // Fetch Doctors for Specialties Preview
   const { data: docsData, isLoading: docsLoading } = useQuery({
     queryKey: ['doctors'],
-    queryFn: () => api.get<{ doctors: any[] }>('/api/patient/doctors').then(r => r.data),
+    queryFn: () => api.get<{ doctors: any[] }>('/api/patient/doctors').then((r: any) => r.data),
   });
 
   if (apptsLoading || docsLoading) return <DashboardSkeleton />;
@@ -76,20 +75,20 @@ export default function PatientDashboard() {
   const now = new Date();
   
   const upcomingAppts = allAppts
-    .filter(a => new Date(a.slot.start_time) > now && a.status !== 'CANCELLED')
-    .sort((a, b) => new Date(a.slot.start_time).getTime() - new Date(b.slot.start_time).getTime());
+    .filter((a: any) => new Date(a.slot.start_time) > now && a.status !== 'CANCELLED')
+    .sort((a: any, b: any) => new Date(a.slot.start_time).getTime() - new Date(b.slot.start_time).getTime());
   
   const nextAppt = upcomingAppts[0];
-  const completedAppts = allAppts.filter(a => a.status === 'COMPLETED');
+  const completedAppts = allAppts.filter((a: any) => a.status === 'COMPLETED');
   
   // Extract Medications
   const activeMedications = completedAppts
-    .filter(a => Array.isArray(a.prescription) && a.prescription.length > 0)
-    .flatMap(a => (a.prescription as any[]).map(med => ({ ...med })))
+    .filter((a: any) => Array.isArray(a.prescription) && a.prescription.length > 0)
+    .flatMap((a: any) => (a.prescription as any[]).map(med => ({ ...med })))
     .slice(0, 4);
 
   // Extract Specialties
-  const specialties = [...new Set(docsData?.doctors?.map(d => d.specialisation) || [])].slice(0, 6);
+  const specialties = [...new Set(docsData?.doctors?.map((d: any) => d.specialisation) || [])].slice(0, 6);
 
   // Helper for formatting relative time
   const formatNextApptTime = (dateStr: string) => {
@@ -256,7 +255,7 @@ export default function PatientDashboard() {
                 <h3 className="font-bold text-lg text-slate-800">Find Your Specialist</h3>
               </div>
               <div className="flex flex-wrap gap-2">
-                {specialties.length > 0 ? specialties.map(s => (
+                {specialties.length > 0 ? specialties.map((s: any) => (
                   <Link key={s} to={`/patient/doctors?specialty=${s}`} className="px-5 py-2.5 bg-white border border-slate-200/80 rounded-full text-sm font-bold text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 transition-colors shadow-sm">
                     {s}
                   </Link>
@@ -327,7 +326,7 @@ export default function PatientDashboard() {
               
               {activeMedications.length > 0 ? (
                 <div className="space-y-4">
-                  {activeMedications.map((med, i) => (
+                  {activeMedications.map((med: any, i: number) => (
                     <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
                       <div className="w-6 h-6 rounded-full border-2 border-slate-300 flex-shrink-0 mt-0.5"></div>
                       <div>
@@ -363,3 +362,6 @@ export default function PatientDashboard() {
     </div>
   );
 }
+
+
+

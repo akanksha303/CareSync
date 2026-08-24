@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 export default function DoctorAppointments() {
   const { data, isLoading } = useQuery({
     queryKey: ['doctor-appointments'],
-    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/doctor/appointments').then(r => r.data),
+    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/doctor/appointments').then((r: any) => r.data),
   });
 
   const statusColors: Record<string, string> = {
@@ -26,7 +26,7 @@ export default function DoctorAppointments() {
         <div className="card text-center py-12 text-gray-500">No appointments found</div>
       )}
       <div className="space-y-3">
-        {data?.appointments?.map(appt => (
+        {data?.appointments?.map((appt: any) => (
           <Link key={appt.id} to={`/doctor/appointments/${appt.id}`}
             className="card block hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between">
@@ -57,3 +57,5 @@ export default function DoctorAppointments() {
     </div>
   );
 }
+
+

@@ -5,25 +5,25 @@ import { useAuth } from '../../contexts/AuthContext';
 import type { Appointment } from '../../types';
 import { format } from 'date-fns';
 
-const ClockIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
-const AlertCircleIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>;
-const CheckCircleIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
-const BrainIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>;
+const ClockIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+const AlertCircleIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>;
+const CheckCircleIcon = ({ className }: { className?: string }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
+const BrainIcon = ({ className }: { className?: string }) => <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>;
 
 export default function DoctorDashboard() {
   const { user } = useAuth();
   const { data, isLoading } = useQuery({
     queryKey: ['doctor-appointments'],
-    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/doctor/appointments').then(r => r.data),
+    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/doctor/appointments').then((r: any) => r.data),
   });
 
   const today = new Date();
-  const todayAppts = data?.appointments?.filter(a => {
+  const todayAppts = data?.appointments?.filter((a: any) => {
     const d = new Date(a.slot.start_time);
     return d.toDateString() === today.toDateString() && a.status === 'CONFIRMED';
   }) || [];
 
-  const highUrgency = data?.appointments?.filter(a =>
+  const highUrgency = data?.appointments?.filter((a: any) =>
     a.ai_pre_summary && !a.ai_pre_summary.error && a.ai_pre_summary.urgency_level === 'High' && a.status === 'CONFIRMED'
   ) || [];
 
@@ -58,7 +58,7 @@ export default function DoctorDashboard() {
         <div className="card text-center flex flex-col items-center justify-center p-8">
           <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-4"><CheckCircleIcon /></div>
           <div className="text-4xl font-extrabold text-brand-dark">
-            {data?.appointments?.filter(a => a.status === 'COMPLETED').length || 0}
+            {data?.appointments?.filter((a: any) => a.status === 'COMPLETED').length || 0}
           </div>
           <div className="text-sm font-bold text-slate-500 mt-2 uppercase tracking-wide">Completed</div>
         </div>
@@ -74,7 +74,7 @@ export default function DoctorDashboard() {
                 <h2 className="text-xl font-bold text-rose-700">Triage Priority</h2>
               </div>
               <div className="space-y-4">
-                {highUrgency.slice(0, 5).map(appt => (
+                {highUrgency.slice(0, 5).map((appt: any) => (
                   <Link key={appt.id} to={`/doctor/appointments/${appt.id}`}
                     className="block p-4 bg-white rounded-2xl border border-rose-100 shadow-sm hover:shadow-md transition-all group">
                     <div className="flex justify-between items-start mb-2">
@@ -108,7 +108,7 @@ export default function DoctorDashboard() {
             </div>
           ) : (
             <div className="space-y-4">
-              {todayAppts.map(appt => (
+              {todayAppts.map((appt: any) => (
                 <Link key={appt.id} to={`/doctor/appointments/${appt.id}`}
                   className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-white border border-slate-200 rounded-2xl hover:border-brand-primary/30 hover:shadow-md transition-all group">
                   
@@ -148,3 +148,6 @@ export default function DoctorDashboard() {
     </div>
   );
 }
+
+
+

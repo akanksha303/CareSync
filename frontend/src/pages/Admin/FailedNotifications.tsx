@@ -8,7 +8,7 @@ export default function FailedNotifications() {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ['failed-notifications'],
-    queryFn: () => api.get<{ notifications: NotificationLog[] }>('/api/admin/notifications/failed').then(r => r.data),
+    queryFn: () => api.get<{ notifications: NotificationLog[] }>('/api/admin/notifications/failed').then((r: any) => r.data),
     refetchInterval: 30000,
   });
 
@@ -44,7 +44,7 @@ export default function FailedNotifications() {
       )}
 
       <div className="space-y-3">
-        {data?.notifications?.map(notif => (
+        {data?.notifications?.map((notif: any) => (
           <div key={notif.id} className="card">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
@@ -81,3 +81,5 @@ export default function FailedNotifications() {
     </div>
   );
 }
+
+

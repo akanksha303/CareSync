@@ -17,7 +17,7 @@ interface DoctorUser {
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 const defaultWorkingHours = Object.fromEntries(
-  DAYS.map(d => [d, d === 'saturday' || d === 'sunday' ? null : { start: '09:00', end: '17:00' }])
+  DAYS.map((d: any) => [d, d === 'saturday' || d === 'sunday' ? null : { start: '09:00', end: '17:00' }])
 );
 
 export default function DoctorManager() {
@@ -31,7 +31,7 @@ export default function DoctorManager() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['admin-doctors'],
-    queryFn: () => api.get<{ doctors: DoctorUser[] }>('/api/admin/doctors').then(r => r.data),
+    queryFn: () => api.get<{ doctors: DoctorUser[] }>('/api/admin/doctors').then((r: any) => r.data),
   });
 
   const createMutation = useMutation({
@@ -113,7 +113,7 @@ export default function DoctorManager() {
       {isLoading && <div className="text-center py-8 text-gray-500">Loading...</div>}
 
       <div className="space-y-3">
-        {data?.doctors?.map(doctor => (
+        {data?.doctors?.map((doctor: any) => (
           <div key={doctor.id} className="card">
             <div className="flex items-start justify-between">
               <div>
@@ -152,3 +152,5 @@ export default function DoctorManager() {
     </div>
   );
 }
+
+

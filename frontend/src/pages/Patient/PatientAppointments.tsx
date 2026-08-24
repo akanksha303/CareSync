@@ -14,7 +14,7 @@ export default function PatientAppointments() {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ['patient-appointments'],
-    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/patient/appointments').then(r => r.data),
+    queryFn: () => api.get<{ appointments: Appointment[] }>('/api/patient/appointments').then((r: any) => r.data),
   });
 
   const cancelMutation = useMutation({
@@ -45,7 +45,7 @@ export default function PatientAppointments() {
         </div>
       )}
       <div className="space-y-4">
-        {data?.appointments?.map(appt => (
+        {data?.appointments?.map((appt: any) => (
           <div key={appt.id} className="card">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
@@ -80,7 +80,7 @@ export default function PatientAppointments() {
                   <div className="mt-2">
                     <p className="text-sm font-medium text-blue-700">Questions to ask your doctor:</p>
                     <ul className="text-sm text-blue-700 list-disc list-inside mt-1">
-                      {appt.ai_pre_summary.suggested_questions.map((q, i) => <li key={i}>{q}</li>)}
+                      {appt.ai_pre_summary.suggested_questions.map((q: any, i: number) => <li key={i}>{q}</li>)}
                     </ul>
                   </div>
                 )}
@@ -97,7 +97,7 @@ export default function PatientAppointments() {
                 )}
                 {appt.ai_post_summary.follow_up_steps && (
                   <ul className="text-sm text-green-700 list-disc list-inside mt-2">
-                    {appt.ai_post_summary.follow_up_steps.map((s, i) => <li key={i}>{s}</li>)}
+                    {appt.ai_post_summary.follow_up_steps.map((s: any, i: number) => <li key={i}>{s}</li>)}
                   </ul>
                 )}
               </div>
@@ -108,7 +108,7 @@ export default function PatientAppointments() {
               <div className="mt-4">
                 <p className="text-sm font-semibold mb-2">Prescription</p>
                 <div className="grid grid-cols-2 gap-2">
-                  {appt.prescription.map((med, i) => (
+                  {appt.prescription.map((med: any, i: number) => (
                     <div key={i} className="p-2 bg-purple-50 rounded text-sm">
                       <p className="font-medium">{med.medicine_name}</p>
                       <p className="text-gray-500">{med.dosage} · {med.frequency} · {med.duration}</p>
@@ -123,3 +123,5 @@ export default function PatientAppointments() {
     </div>
   );
 }
+
+
