@@ -2,6 +2,10 @@
 
 **CareSync** is a modern, AI-powered healthcare appointment and patient management platform. It bridges the gap between patients and healthcare providers by offering seamless booking, smart AI medical summaries, and a beautifully designed workspace.
 
+## 🌍 Live Deployment
+
+* **Live Website:** [https://care-sync-green.vercel.app](https://care-sync-green.vercel.app)
+
 ---
 
 ## ✨ Key Features
@@ -96,6 +100,22 @@ Start the frontend development server:
 ```bash
 npm run dev
 ```
+
+---
+
+## ☁️ Cloud Deployment (Vercel)
+
+To deploy the frontend application live to Vercel, follow these steps:
+
+1. Log in to [Vercel](https://vercel.com) and click **Add New Project**.
+2. Import your CareSync GitHub repository.
+3. In the project setup screen, change the **Root Directory** to `frontend`.
+4. Open the **Environment Variables** section and add:
+   * **Name:** `VITE_API_URL`
+   * **Value:** *(The URL of your deployed backend, e.g., `https://caresync-backend.onrender.com`)*
+5. Click **Deploy**.
+
+*Note: For the application to function, you must also deploy the `backend` folder to a service like Render and provision a PostgreSQL database.*
 
 ---
 *Built with ❤️ to make healthcare simpler.*
