@@ -42,43 +42,34 @@ CareSync is a premium healthcare SaaS platform that seamlessly connects patients
 
 ---
 
-## ?? Folder Structure
+## üìÇ Folder Structure
 
-`	ext
-CareSync/
-¶
-+-- backend/                  # Node.js & Express API
-¶   +-- prisma/
-¶   ¶   +-- schema.prisma     # PostgreSQL Database schema
-¶   +-- src/
-¶   ¶   +-- config/           # Prisma client, Nodemailer setup
-¶   ¶   +-- jobs/             # Background workers (Cron, Notifications, Expiry)
-¶   ¶   +-- middleware/       # JWT Auth and Role-based access
-¶   ¶   +-- routes/           # API Endpoints (auth, admin, doctor, patient)
-¶   ¶   +-- types/            # TypeScript interfaces
-¶   ¶   +-- index.ts          # Server entry point & DB Seeder
-¶   +-- package.json
-¶
-+-- frontend/                 # React & Vite SPA
-    +-- src/
-    ¶   +-- api/              # Axios client with JWT interceptors
-    ¶   +-- components/       # Reusable UI (Navbar, Buttons, Inputs)
-    ¶   +-- contexts/         # React Context (AuthContext)
-    ¶   +-- pages/
-    ¶   ¶   +-- Admin/        # Control center, leave management, alerts
-    ¶   ¶   +-- Auth/         # Login & Registration
-    ¶   ¶   +-- Doctor/       # Appointments, clinical notes, prescriptions
-    ¶   ¶   +-- Patient/      # Glassmorphism dashboard, LLM booking
-    ¶   +-- types/            # Shared interfaces (Appointments, Users)
-    ¶   +-- App.tsx           # React Router configuration
-    ¶   +-- main.tsx          # React DOM mounting & React Query Provider
-    +-- tailwind.config.js    # Design system configuration
-    +-- package.json
-`
+### üñ•Ô∏è Backend (Node.js & Express)
+* **`prisma/`** ‚Äî PostgreSQL database schema (`schema.prisma`).
+* **`src/`**
+  * **`config/`** ‚Äî Prisma client and Nodemailer email configurations.
+  * **`jobs/`** ‚Äî Background workers (cron jobs, email notifications, slot expiry).
+  * **`middleware/`** ‚Äî JWT authentication and role-based access controllers.
+  * **`routes/`** ‚Äî API endpoints logically split by role (`admin.ts`, `doctor.ts`, `patient.ts`, `auth.ts`).
+  * **`types/`** ‚Äî Global TypeScript interfaces.
+  * **`index.ts`** ‚Äî Main server entry point and Database Seeder.
+
+### üé® Frontend (React & Vite)
+* **`src/`**
+  * **`api/`** ‚Äî Axios client with JWT interceptors for secure backend communication.
+  * **`components/`** ‚Äî Reusable UI components.
+  * **`contexts/`** ‚Äî React Context providers (AuthContext).
+  * **`pages/`** ‚Äî The core application views, separated by user role:
+    * **`Admin/`** ‚Äî Control center, leave management, and system alerts.
+    * **`Auth/`** ‚Äî Login and Registration screens.
+    * **`Doctor/`** ‚Äî Clinical dashboard, patient charts, and AI prescriptions.
+    * **`Patient/`** ‚Äî Booking interface, active medications, and care timelines.
+  * **`App.tsx`** ‚Äî React Router configuration.
+  * **`main.tsx`** ‚Äî React DOM mounting and Query Provider.
 
 ---
 
-## ?? Database Structure
+## üóÑ Database Structure
 
 The PostgreSQL database is heavily normalized to ensure data integrity and fast queries.
 
@@ -146,4 +137,3 @@ You can instantly populate the database with rich medical history, AI summaries,
 * **Admin:** `admin@caresync.app` | `Password123!`
 * **Doctor:** `sarah@caresync.app` | `Password123!`
 * **Patient:** `john@caresync.app` | `Password123!`
-
