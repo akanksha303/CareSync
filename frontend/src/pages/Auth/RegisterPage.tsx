@@ -108,7 +108,7 @@ export default function RegisterPage() {
             
             {/* Role Selector Tabs */}
             <div className="bg-slate-100 p-1.5 rounded-xl flex gap-1 mb-2">
-              {['PATIENT', 'DOCTOR', 'ADMIN'].map((role) => (
+              {['PATIENT', 'DOCTOR'].map((role) => (
                 <button
                   key={role}
                   type="button"

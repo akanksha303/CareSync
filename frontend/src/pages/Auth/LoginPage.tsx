@@ -109,7 +109,7 @@ export default function LoginPage() {
             
             {/* Role Selector Tabs */}
             <div className="bg-slate-100 p-1.5 rounded-xl flex gap-1">
-              {['PATIENT', 'DOCTOR', 'ADMIN'].map((role) => (
+              {['PATIENT', 'DOCTOR'].map((role) => (
                 <button
                   key={role}
                   type="button"
@@ -161,20 +161,10 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between px-1">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded text-brand-primary focus:ring-brand-primary border-slate-300" />
-                <span className="text-sm font-bold text-slate-600">Remember me</span>
-              </label>
-              <a href="#" className="text-sm font-bold text-brand-primary hover:text-brand-primaryHover transition-colors">
-                Forgot password?
-              </a>
-            </div>
-
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-brand-primary hover:bg-brand-primaryHover text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgb(37,99,235,0.2)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 transition-all active:translate-y-0 disabled:opacity-70 disabled:pointer-events-none mt-2"
+              className="w-full bg-brand-primary hover:bg-brand-primaryHover text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgb(37,99,235,0.2)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 transition-all active:translate-y-0 disabled:opacity-70 disabled:pointer-events-none mt-4"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
