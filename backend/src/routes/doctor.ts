@@ -71,7 +71,7 @@ router.post('/appointments/:id/complete', async (req: Request, res: Response) =>
       data: {
         doctor_notes,
         prescription: prescription || undefined,
-        ai_post_summary: aiPostSummary,
+        ai_post_summary: aiPostSummary as any,
         status: 'COMPLETED',
       },
     });

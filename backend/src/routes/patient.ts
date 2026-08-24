@@ -3,7 +3,7 @@ import { prisma } from '../config/prisma';
 import { authenticate, requireRole } from '../middleware/auth';
 import { generatePreVisitSummary } from '../services/llm';
 import { sendBookingConfirmation } from '../services/email';
-import { createCalendarEvent } from '../services/calendar';
+import { createCalendarEvent, deleteCalendarEvent } from '../services/calendar';
 import { z } from 'zod';
 
 const router = Router();
