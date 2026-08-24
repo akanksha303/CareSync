@@ -4,6 +4,8 @@ CareSync is a premium healthcare SaaS platform that seamlessly connects patients
 
 ## 🌟 Key Features
 
+care-sync-sooty-iota.vercel.app
+
 ### 1. Smart Scheduling & Anti-Double-Booking
 * **Atomic Slot Locking:** Uses PostgreSQL transactions to temporarily hold a slot for 10 minutes when a patient begins checkout, preventing simultaneous bookings.
 * **Dynamic Availability:** Doctors configure working hours and slot durations; the system automatically generates available slots via a background cron job.
