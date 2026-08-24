@@ -15,8 +15,6 @@ const ActivityIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill=
 const ArrowRightIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
 const ClockIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
 const AlertCircleIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>;
-const MapPinIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>;
-const CheckCircleIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
 
 // --- Skeletons ---
 const DashboardSkeleton = () => (
@@ -87,7 +85,7 @@ export default function PatientDashboard() {
   // Extract Medications
   const activeMedications = completedAppts
     .filter(a => Array.isArray(a.prescription) && a.prescription.length > 0)
-    .flatMap(a => (a.prescription as any[]).map(med => ({ ...med, date: a.updated_at })))
+    .flatMap(a => (a.prescription as any[]).map(med => ({ ...med })))
     .slice(0, 4);
 
   // Extract Specialties
@@ -151,7 +149,7 @@ export default function PatientDashboard() {
                         <div>
                           <p className="font-bold text-lg text-slate-800">{nextAppt.doctor?.name}</p>
                           <p className="text-slate-500 font-medium text-sm flex items-center gap-1.5">
-                            <StethoscopeIcon /> {nextAppt.doctor?.doctorProfile?.specialisation || 'Specialist'}
+                            <StethoscopeIcon /> Specialist
                           </p>
                         </div>
                       </div>
