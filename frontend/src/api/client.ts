@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -25,4 +26,5 @@ api.interceptors.response.use(
 );
 
 export default api;
+
 
