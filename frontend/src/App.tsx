@@ -11,6 +11,7 @@ import PatientDashboard from './pages/Patient/PatientDashboard';
 import DoctorSearch from './pages/Patient/DoctorSearch';
 import BookAppointment from './pages/Patient/BookAppointment';
 import PatientAppointments from './pages/Patient/PatientAppointments';
+import PatientMedications from './pages/Patient/PatientMedications';
 
 // Doctor
 import DoctorLayout from './pages/Doctor/DoctorLayout';
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="search" element={<DoctorSearch />} />
           <Route path="book/:doctorId" element={<BookAppointment />} />
           <Route path="appointments" element={<PatientAppointments />} />
+          <Route path="medications" element={<PatientMedications />} />
         </Route>
 
         {/* Doctor */}
@@ -82,3 +84,5 @@ export default function App() {
     </AuthProvider>
   );
 }
+
+
