@@ -174,28 +174,12 @@ export default function LoginPage() {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-brand-primary hover:bg-brand-primaryHover text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgb(37,99,235,0.2)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 transition-all active:translate-y-0 disabled:opacity-70 disabled:pointer-events-none"
+              className="w-full bg-brand-primary hover:bg-brand-primaryHover text-white font-bold py-3.5 rounded-xl shadow-[0_4px_14px_0_rgb(37,99,235,0.2)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.3)] hover:-translate-y-0.5 transition-all active:translate-y-0 disabled:opacity-70 disabled:pointer-events-none mt-2"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
             
-            <div className="relative flex items-center py-2">
-              <div className="flex-grow border-t border-slate-200"></div>
-              <span className="flex-shrink-0 mx-4 text-slate-400 text-sm font-bold">Or continue with</span>
-              <div className="flex-grow border-t border-slate-200"></div>
-            </div>
-
-            <button type="button" className="w-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-3 shadow-sm">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.56 12.25C22.56 11.47 22.49 10.72 22.36 10H12V14.26H17.92C17.66 15.63 16.88 16.78 15.7 17.57V20.34H19.27C21.36 18.42 22.56 15.6 22.56 12.25Z" fill="#4285F4"/>
-                <path d="M12 23C14.97 23 17.46 22.02 19.27 20.34L15.7 17.57C14.72 18.23 13.47 18.63 12 18.63C9.16 18.63 6.76 16.71 5.9 14.14H2.23V16.99C4.03 20.56 7.71 23 12 23Z" fill="#34A853"/>
-                <path d="M5.9 14.14C5.68 13.49 5.56 12.77 5.56 12C5.56 11.23 5.68 10.51 5.9 9.86V7.01H2.23C1.49 8.48 1.06 10.18 1.06 12C1.06 13.82 1.49 15.52 2.23 16.99L5.9 14.14Z" fill="#FBBC05"/>
-                <path d="M12 5.38C13.62 5.38 15.06 5.93 16.2 7.02L19.34 3.88C17.45 2.12 14.97 1 12 1C7.71 1 4.03 3.44 2.23 7.01L5.9 9.86C6.76 7.29 9.16 5.38 12 5.38Z" fill="#EA4335"/>
-              </svg>
-              Google
-            </button>
-
-            <p className="text-center text-sm font-bold text-slate-500">
+            <p className="text-center text-sm font-bold text-slate-500 mt-4">
               Don't have an account?{' '}
               <Link to="/register" className="text-brand-primary hover:text-brand-primaryHover transition-colors">
                 Create an account
