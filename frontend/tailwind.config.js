@@ -12,11 +12,11 @@ export default {
           700: '#1d4ed8',
         },
         brand: {
-          cream: '#FDFBF7',
-          mint: '#E0F4EE',
-          teal: '#1A5F5A',
-          orange: '#F28562',
-          orangeHover: '#E06B47',
+          bg: '#F8FAFC', // Slate 50
+          dark: '#0F172A', // Slate 900
+          primary: '#2563EB', // Blue 600
+          primaryHover: '#1D4ED8', // Blue 700
+          accent: '#10B981', // Emerald 500
         }
       },
       animation: {
