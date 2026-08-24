@@ -1,121 +1,112 @@
-# 🏥 CareSync
+# CareSync
 
-**CareSync** is a modern, AI-powered healthcare appointment and patient management platform. It bridges the gap between patients and healthcare providers by offering seamless booking, smart AI medical summaries, and a beautifully designed workspace.
+CareSync is a premium healthcare SaaS platform that seamlessly connects patients, doctors, and administrators. It modernizes the clinical experience with AI-powered medical summaries, atomic anti-double-booking scheduling, and automated Google Calendar integrations.
 
-## 🌍 Live Deployment
+## 🌟 Key Features
 
-* **Live Website:** [https://care-sync-green.vercel.app](https://care-sync-green.vercel.app)
+### 1. Smart Scheduling & Anti-Double-Booking
+* **Atomic Slot Locking:** Uses PostgreSQL transactions to temporarily hold a slot for 10 minutes when a patient begins checkout, preventing simultaneous bookings.
+* **Dynamic Availability:** Doctors configure working hours and slot durations; the system automatically generates available slots via a background cron job.
+* **Leave Management:** Admins can approve doctor leaves, which automatically handles conflicts and reschedules affected appointments.
+
+### 2. AI-Powered Healthcare (Groq LLM)
+* **Pre-Visit Triage:** When patients book an appointment and enter symptoms, the Groq LLaMA-3 model instantly triages the symptoms, determines an urgency level (High/Medium/Low), and generates suggested clinical questions for the doctor.
+* **Post-Visit Translation:** Doctors submit raw clinical notes and prescriptions. CareSync AI translates this jargon into a plain-English recovery plan for the patient, including follow-up steps.
+
+### 3. Automated Background Workers
+* **Notification Engine:** Dispatches Email and Google Calendar invites asynchronously. Features a resilient retry mechanism that logs failed notifications for Admin review.
+* **Medication Reminders:** Background cron jobs process active prescriptions and send daily pill reminders to patients.
+
+### 4. Role-Based Portals
+* **Patient Portal:** Glassmorphism dashboard to book slots, view AI care timelines, and track active medications.
+* **Doctor Portal:** Clinical dashboard to manage daily schedules, view AI patient charts, and prescribe medication.
+* **Admin Portal:** System control center to monitor failed notifications, manage doctor profiles, and resolve leave conflicts.
 
 ---
 
-## ✨ Key Features
-
-* **🤖 AI-Powered Medical Assistant (Powered by Groq & Llama 3)**
-  * **Pre-Visit:** Automatically summarizes patient symptoms into a professional medical overview for the doctor before the appointment.
-  * **Post-Visit:** Translates complex doctor's notes into simple, easy-to-understand language for the patient.
-  * **Smart Prescriptions:** Automatically extracts prescribed medications and dosages from doctor notes.
-* **👥 Role-Based Portals**
-  * **Patient Dashboard:** Search for specialists, book appointments, and view medical history.
-  * **Doctor Dashboard:** Manage working hours, view daily schedules, and write visit notes.
-  * **Admin Dashboard:** Oversee platform usage and manage hospital staff.
-* **🎨 Premium UI/UX**
-  * Built with Tailwind CSS featuring a modern glassmorphism design, clean typography, and a calming healthcare color palette.
-
----
-
-## 🛠️ Tech Stack
+## 🏗 Architecture & Tech Stack
 
 ### Frontend
-* **React 18** (Vite)
-* **Tailwind CSS** (Styling & Glassmorphism)
-* **React Router** (Navigation)
-* **React Query** (Data Fetching & Caching)
-* **React Hot Toast** (Notifications)
+* **Framework:** React 18 with TypeScript & Vite
+* **Routing & State:** React Router DOM, TanStack React Query
+* **Styling:** Tailwind CSS (Custom glassmorphism design system)
+* **Hosting:** Vercel
 
 ### Backend
-* **Node.js & Express** (REST API)
-* **Prisma ORM** (Database Management)
-* **PostgreSQL** (Relational Database)
-* **Groq Cloud API** (Lightning-fast LLM processing)
-* **JWT & bcrypt** (Authentication & Security)
+* **Runtime & Framework:** Node.js, Express.js with TypeScript
+* **Database & ORM:** PostgreSQL managed via Prisma ORM
+* **Authentication:** JWT (JSON Web Tokens) & bcrypt
+* **AI Provider:** Groq API (`llama3-8b-8192`)
+* **Integrations:** Google Calendar API (OAuth 2.0), Nodemailer
+* **Hosting:** Render
 
 ---
 
-## 🚀 Live Demo Credentials
+## 🗄 Database Structure
 
-If you are testing the live deployed version of this application, you can log in with any of the following demo accounts:
+The PostgreSQL database is heavily normalized to ensure data integrity and fast queries.
 
-**Password for ALL accounts:** `Password123!`
+### Core Models
 
-| Role | Email |
-| :--- | :--- |
-| **Patient** | `john@caresync.app` |
-| **Doctor** | `sarah@caresync.app` *(Cardiologist)* |
-| **Admin** | `admin@caresync.app` |
-
----
-
-## 💻 Local Setup Instructions
-
-To run this project locally on your machine, follow these steps:
-
-### 1. Database Setup
-Ensure you have a PostgreSQL database running locally or on a cloud provider like Render/Supabase.
-
-### 2. Backend Setup
-```bash
-cd backend
-npm install
-```
-
-Create a `.env` file in the `backend` folder:
-```env
-DATABASE_URL="postgresql://user:password@localhost:5432/caresync"
-JWT_SECRET="your_super_secret_key"
-PORT=4000
-FRONTEND_URL="http://localhost:5173"
-GROQ_API_KEY="your_groq_api_key_here"
-GROQ_MODEL="llama3-8b-8192"
-```
-
-Push the database schema and start the server:
-```bash
-npx prisma db push
-npm run dev
-```
-
-### 3. Frontend Setup
-Open a new terminal and navigate to the frontend folder:
-```bash
-cd frontend
-npm install
-```
-
-Create a `.env` file in the `frontend` folder:
-```env
-VITE_API_URL="http://localhost:4000"
-```
-
-Start the frontend development server:
-```bash
-npm run dev
-```
+* **`User`**: Base authentication table (Fields: `id`, `email`, `password_hash`, `role`).
+* **`DoctorProfile`**: Extended data for doctors (Fields: `user_id`, `specialisation`, `working_hours`, `slot_duration_min`).
+* **`DoctorLeave`**: Tracks approved days off to prevent slot generation.
+* **`Slot`**: Represents a bookable block of time (Fields: `doctor_id`, `start_time`, `end_time`, `status` [AVAILABLE, HELD, BOOKED]).
+* **`Appointment`**: The core clinical record. Connects a `Slot`, `Patient`, and `Doctor`. Stores `symptoms_text`, `doctor_notes`, `prescription` (JSON), and the AI outputs (`ai_pre_summary`, `ai_post_summary`).
+* **`NotificationLog`**: Queue for background tasks. Tracks `type` (EMAIL/CALENDAR), `status` (PENDING, SENT, FAILED), and `attempts`.
 
 ---
 
-## ☁️ Cloud Deployment (Vercel)
+## 🔌 Core API Endpoints
 
-To deploy the frontend application live to Vercel, follow these steps:
+### Auth
+* `POST /api/auth/register` - Create new user account
+* `POST /api/auth/login` - Authenticate and return JWT token
 
-1. Log in to [Vercel](https://vercel.com) and click **Add New Project**.
-2. Import your CareSync GitHub repository.
-3. In the project setup screen, change the **Root Directory** to `frontend`.
-4. Open the **Environment Variables** section and add:
-   * **Name:** `VITE_API_URL`
-   * **Value:** *(The URL of your deployed backend, e.g., `https://caresync-backend.onrender.com`)*
-5. Click **Deploy**.
+### Patient API
+* `GET /api/patient/doctors` - Browse available doctors and specialties
+* `GET /api/patient/slots/:doctorId` - Fetch available (non-held) slots
+* `POST /api/patient/appointments/hold` - Temporarily lock a slot for booking
+* `POST /api/patient/appointments` - Confirm booking and trigger AI Pre-Visit Triage
+* `GET /api/patient/appointments` - Fetch patient history and prescriptions
 
-*Note: For the application to function, you must also deploy the `backend` folder to a service like Render and provision a PostgreSQL database.*
+### Doctor API
+* `GET /api/doctor/appointments` - View today's schedule and patient charts
+* `POST /api/doctor/appointments/:id/complete` - Submit clinical notes/prescriptions and trigger AI Post-Visit summary
+* `POST /api/doctor/leaves` - Request time off
+
+### Admin API
+* `GET /api/admin/notifications/failed` - Monitor background worker health
+* `GET /api/admin/leaves/conflicts` - Review appointments affected by doctor leaves
+* `GET /api/seed` - Instantly populate the database with comprehensive mock data
 
 ---
-*Built with ❤️ to make healthcare simpler.*
+
+## 🚀 Running the Project Locally
+
+### Prerequisites
+* Node.js (v18+)
+* PostgreSQL running locally or via Docker
+
+### Backend Setup
+1. `cd backend`
+2. `npm install`
+3. Create a `.env` file and configure `DATABASE_URL`, `JWT_SECRET`, and `GROQ_API_KEY`.
+4. Run migrations: `npx prisma migrate dev`
+5. Start server: `npm run dev` (Runs on `http://localhost:4000`)
+
+### Frontend Setup
+1. `cd frontend`
+2. `npm install`
+3. Create a `.env` file: `VITE_API_URL=http://localhost:4000`
+4. Start client: `npm run dev` (Runs on `http://localhost:5173`)
+
+---
+
+## 🔑 Quick Demo Access
+
+You can instantly populate the database with rich medical history, AI summaries, and active prescriptions by hitting the `/api/seed` route on the backend. Once seeded, use these credentials on the login page:
+
+* **Admin:** `admin@caresync.app` | `Password123!`
+* **Doctor:** `sarah@caresync.app` | `Password123!`
+* **Patient:** `john@caresync.app` | `Password123!`
