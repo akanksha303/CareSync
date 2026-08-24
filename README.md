@@ -42,7 +42,43 @@ CareSync is a premium healthcare SaaS platform that seamlessly connects patients
 
 ---
 
-## ðŸ—„ Database Structure
+## ?? Folder Structure
+
+`	ext
+CareSync/
+¦
++-- backend/                  # Node.js & Express API
+¦   +-- prisma/
+¦   ¦   +-- schema.prisma     # PostgreSQL Database schema
+¦   +-- src/
+¦   ¦   +-- config/           # Prisma client, Nodemailer setup
+¦   ¦   +-- jobs/             # Background workers (Cron, Notifications, Expiry)
+¦   ¦   +-- middleware/       # JWT Auth and Role-based access
+¦   ¦   +-- routes/           # API Endpoints (auth, admin, doctor, patient)
+¦   ¦   +-- types/            # TypeScript interfaces
+¦   ¦   +-- index.ts          # Server entry point & DB Seeder
+¦   +-- package.json
+¦
++-- frontend/                 # React & Vite SPA
+    +-- src/
+    ¦   +-- api/              # Axios client with JWT interceptors
+    ¦   +-- components/       # Reusable UI (Navbar, Buttons, Inputs)
+    ¦   +-- contexts/         # React Context (AuthContext)
+    ¦   +-- pages/
+    ¦   ¦   +-- Admin/        # Control center, leave management, alerts
+    ¦   ¦   +-- Auth/         # Login & Registration
+    ¦   ¦   +-- Doctor/       # Appointments, clinical notes, prescriptions
+    ¦   ¦   +-- Patient/      # Glassmorphism dashboard, LLM booking
+    ¦   +-- types/            # Shared interfaces (Appointments, Users)
+    ¦   +-- App.tsx           # React Router configuration
+    ¦   +-- main.tsx          # React DOM mounting & React Query Provider
+    +-- tailwind.config.js    # Design system configuration
+    +-- package.json
+`
+
+---
+
+## ?? Database Structure
 
 The PostgreSQL database is heavily normalized to ensure data integrity and fast queries.
 
@@ -110,3 +146,4 @@ You can instantly populate the database with rich medical history, AI summaries,
 * **Admin:** `admin@caresync.app` | `Password123!`
 * **Doctor:** `sarah@caresync.app` | `Password123!`
 * **Patient:** `john@caresync.app` | `Password123!`
+
